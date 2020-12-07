@@ -1,15 +1,30 @@
-import page from './page-model';
+import MainPage from './pages/MainPage';
+import ResultPage from './pages/ResultPage';
+import config from './config';
+import { enterName, getProductDescription} from './helper';
 
 fixture `Search Amazon Web Site`
 
-.page `https://www.amazon.com/`;
+.page(config.baseUrl);
 
-test('Get Headphones Best Sellers', async t => {
+test.disablePageCaching('Get Headphones Best Sellers', async t => {
     
+    const mainPage=new MainPage();
+    const resultPage=new ResultPage();
+    await enterName(mainPage.searchInput,mainPage.searchButton,'headphones');
+    await resultPage.resultLabel.with({ visibilityCheck: true })();;
+    const num=await resultPage.resultList.count;
 
-    await page.searchItem('headphones');
-    const num= page.getBestSellersCount;
+    await t.expect(num).gt(0);
+    var res=new Array();
     for(var i=0;i<num;i++)
-       console.log('Best Seller : ' + page.getBestSellersText(i));
+    {
+     
+      const article=await resultPage.resultList.nth(i).textContent;
+      const descripID =  await getProductDescription(resultPage.resultList.nth(i));
+      const productDescrip=await resultPage.getSelector(descripID);
+      res.push(article+' - '+productDescrip+'\n');
+    }
 
+    console.log(res)
 });
