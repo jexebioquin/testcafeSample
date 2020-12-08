@@ -7,4 +7,4 @@
 
 4. on your ide terminal run the test with the command node runner.js.
 
-5. An xml report is generated in reports folder.
+5. an xml report is generated in reports folder.
