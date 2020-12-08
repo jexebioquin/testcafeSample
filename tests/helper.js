@@ -1,15 +1,15 @@
 import { t } from 'testcafe';
 
-export async function enterName(selector1,selector2, searchtext) {
+export async function enterName(searchInput,searchButton, searchtext) {
      await t
-            .typeText(selector1, searchtext)
-            .expect(selector1.value).eql(searchtext)
-            .click(selector2);
+            .typeText(searchInput, searchtext)
+            .expect(searchInput.value).eql(searchtext, 'value in input is not '+searchtext)
+            .click(searchButton);
 };
 
-export async function getProductDescription(selector) {
-    const productID=await selector.getAttribute("id");
-    const ID=productID.replace("-best-seller-supplementary","");
+export async function getProductID(bestSellerLabel) {
+    const labelID=await bestSellerLabel.getAttribute("id");
+    const ID=labelID.replace("-best-seller-supplementary","");
     return ID;
 }
 

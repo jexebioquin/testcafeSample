@@ -7,10 +7,10 @@ class ResultPage {
        
     }
 
-    async getSelector(text){
-      const selector= Selector('a[href*="'+text+'"] span');
+    async getProductDescription(text){
+      const productDescription= Selector('a[href*="'+text+'"] span');
  
-       return selector.textContent;
+       return productDescription.textContent;
     }
 }
 
